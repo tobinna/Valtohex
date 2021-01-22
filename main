@@ -1,0 +1,68 @@
+	@ Start of file ValToHex.s
+    	@
+     	@ Copyright 2020 University of Dublin. All Rights Reserved.
+     	@
+     	@ Design and write an ARM assembly language program to 
+     	@ convert a 32 bit unsigned value stored in r1
+     	@ to it's hexadecimal ASCII string representation.
+     	@ Store the resulting string beginning at address 
+     	@ 0xA1000400. Your answer should contain 8 characters
+    	@ including leading zeros where appropriate, and
+    	@ should use uppercase 'A'-'F'.
+    	
+    	
+    		.text
+    	
+    	start:
+    	
+    		LDR	r1, =0xFEED1234
+    	
+    	@ Upload the code that goes between the dashed lines.
+    	@ -------------- start cut ------------------------
+    	
+    		
+    		LDR R4, =0xA1000400
+    		MOV R6, #0
+    		MOV R7, #0
+    		MOV R8, #8
+    		MOV R5, #0xA
+    	
+    		MOVS R5, R5
+    	while:
+    		MOVS R5, R5
+    		
+    		CMP R7, R8
+    		BEQ end_while
+    	
+    		MOV R3, R1
+    		MOV R3, R3, LSL R6
+    		MOV R3, R3, LSR #28
+    	
+    		MOVS R5, R5
+    		
+    		CMP R3, R5
+    		BMI number
+    		
+    		ADD R3, R3, #0x37
+    		STR R3, [R4], #1
+    		B end_number
+    	
+     number:
+    	ADD R3, R3, #0x30
+    		STR R3, [R4], #1
+    	
+    	end_number:
+    		ADD R6, R6, #4
+    		ADD R7, R7, #1
+    		B while
+    	
+    	end_while:
+    	
+    	
+    	@ -------------- end cut --------------------------
+    	
+    	stop:   B	stop
+    		.data
+    		.end
+    	@
+    	@ End of file ValToHex.s
